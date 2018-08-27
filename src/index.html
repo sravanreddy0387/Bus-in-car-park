@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Parking Simulator</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body class="container-fluid" ng-controller="AppController as app" ng-keydown="app.keyCmds($event)">
+    <div>
+        <div class="row content">
+            <div class="col-sm-12 sidenav hidden-xs">
+                <h2>Bus in Carpark Simulator</h2>
+            </div>
+
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="well">
+                            <h4>Execute Command</h4>
+                            <div class="input-group">
+                                <input type="text" ng-model="app.command" class="form-control" placeholder="Enter Command ...">
+                                <span class="input-group-btn">
+                                    <input class="btn btn-default" type="submit" ng-click="app.controlBus(command)" value="Run" />
+                                </span>
+                            </div>
+                            <br/>
+
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <p ng-if="success !== undefined && !success" class="alert alert-danger"> {{app.message}} </p>
+                        <p ng-if="success !== undefined && success && message !== undefined" class="alert alert-success"> {{app.message}}
+                            </p>
+                    </div>
+                </div>
+
+                <div class="well">
+                    <h4>Car Park </h4>
+                    <p ng-if="currentPos.x !== undefined && currentPos.y !== undefined" class="pull-left">Current Position
+                        {{app.currentPos.x}}, {{app.currentPos.y}}, {{app.currentPos.f}}</p>
+                    <p class="pull-right"> {{app.config.carPark.lengthX}} x {{app.config.carPark.lengthY}}</p>
+                    <br/>
+                    <table class="table table-bordered table-striped">
+                        <tr ng-repeat="row in app.carPark">
+                            <td ng-repeat="column in row">
+                                <p style="min-width:50px; min-height: 50px;" title="x:{{column.x}}, y:{{column.y}}">
+                                    <i ng-if="app.currentPos.x === column.x && app.currentPos.y === column.y" style="color:green" class="fa fa-2x fa-bus {{ app.currentPos.f }}"></i>
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
+                    <p ng-if="app.currentPos.x === undefined || app.currentPos.y === undefined">
+                        <i class="fa fa-bus NORTH"></i> Entering car park, place the bus on the park
+                        <p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/js/main.js"></script>
+
+</body>
+
+</html>
